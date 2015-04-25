@@ -45,7 +45,7 @@ namespace SEProj.Controllers
         FileStream fileStreamOut = new FileStream
 		(DstFile + @"\" + entry.Name, FileMode.Create, FileAccess.Write);
         int size;
-        byte[] buffer = new byte<BufferSize/>;
+        byte[] buffer = new byte[BufferSize];
         do
         {
             size = zipInStream.Read(buffer, 0, buffer.Length);
