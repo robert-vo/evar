@@ -17,7 +17,7 @@ namespace SEProj.Controllers
             ViewData["Message"] = "Welcome to ASP.NET MVC!";
             return View();
         }
-        
+
         public ActionResult UploadAndStoreEVARMetaData()
         {
             return View();
@@ -31,9 +31,11 @@ namespace SEProj.Controllers
                 var fileName = Path.GetFileName(file.FileName);
                 var path = Path.Combine(Server.MapPath("~/App_Data/"), fileName);
                 file.SaveAs(path);
+
             }
             return RedirectToAction("UploadAndStoreEVARMetaData");
         }
+     
 
     }
 }
