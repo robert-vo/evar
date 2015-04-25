@@ -1,0 +1,105 @@
+﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!-- Lime Talk Live Chat start --> <script type="text/javascript">                                       var limetalk = (function () { var lc = document.createElement("script"); lc.type = "text/javascript"; lc.async = true; lc.src = "//www.limetalk.com/livechat/2f7cc3a9649196783f441ea2fb7798e1"; document.getElementsByTagName("head")[0].appendChild(lc); var fnr = function (fn) { var l = limetalk; if (l.readyList) { l.ready(fn); } else { l.rl = l.rl || []; l.rl.push(fn); } }; fnr.ready = fnr; return fnr; })(); </script> <!-- Lime Talk Live Chat end -->
+
+
+<head runat="server">
+    <title>
+        <asp:ContentPlaceHolder ID="TitleContent" runat="server" />
+    </title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.dropotron.min.js"></script>
+    <script src="js/skel.min.js"></script>
+    <script src="js/skel-layers.min.js"></script>
+    <script src="js/init.js"></script>
+    <noscript>
+        <link rel="stylesheet" href="css/skel.css" />
+        <link rel="stylesheet" href="css/style.css" />
+        <link rel="stylesheet" href="css/style-desktop.css" />
+    </noscript>
+    <!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
+</head>
+<body class="homepage">
+    <!-- Header -->
+    <header id="header">
+        <div class="logo container">
+            <div>
+                <h1>
+                    <%:Html.ActionLink("TEAM1OIE2S", "Index", "Home")%></h1>
+                <p>
+                    Anonymized EVAR Solutions</p>
+            </div>
+        </div>
+    </header>
+    <!-- Nav -->
+    <nav id="nav" class="skel-layers-fixed">
+        <ul>
+            <li class="current">
+                <%: Html.ActionLink("Home", "Index", "Home")%></li>
+            <li>
+                <%: Html.ActionLink("About", "About", "Home")%></li>
+            <li>
+                <%: Html.ActionLink("Contact Us", "ContactUs", "Home")%></li>
+            <li>
+                <%: Html.ActionLink("Testimonials", "Testimonials", "Home")%></li>
+            <li>
+                <%: Html.ActionLink("Upload", "Anonymize", "Home")%></li>
+        </ul>
+    </nav>
+    <!-- Banner -->
+    <div id="banner-wrapper">
+        <section id="banner">
+            <h2>
+                Welcome to TEAM1OIE2S Website!</h2>
+            <p>
+                A free responsive site template built on HTML5, CSS3, skel, and some other stuff</p>
+            <h2 class="button">
+                <%: Html.ActionLink("Register", "Register", "Account")%></h2>
+            <p>
+                OR<br />
+                <% Html.RenderPartial("LogOnUserControl"); %></p>
+        </section>
+    </div>
+    <!-- Main -->
+    <div id="main-wrapper">
+        <div id="main" class="container">
+            <div class="row 200%">
+                <div class="12u">
+                    <!-- Highlight -->
+                    <section class="box highlight">
+                        <ul class="special">
+                            <li><a href="#" class="icon fa-search"><span class="label">Magnifier</span></a></li>
+                            <li><a href="#" class="icon fa-tablet"><span class="label">Tablet</span></a></li>
+                            <li><a href="#" class="icon fa-flask"><span class="label">Flask</span></a></li>
+                            <li><a href="#" class="icon fa-cog"><span class="label">Cog?</span></a></li>
+                        </ul>
+                        <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+                    </section>
+                    <!-- Footer -->
+                    <footer id="footer" class="container">
+                        <div class="row 200%">
+                            <div class="12u">
+                                <!-- About -->
+                                <section>
+                                    <h2 class="major">
+                                        <span>What's this about?</span></h2>
+                                    <p>
+                                        This is <strong>TXT</strong>, yet another free responsive site template designed
+                                        by <a href="http://n33.co">AJ</a> for <a href="http://html5up.net">HTML5 UP</a>.
+                                        It's released under the <a href="http://html5up.net/license/">Creative Commons Attribution</a>
+                                        license so feel free to use it for whatever you're working on (personal or commercial),
+                                        just be sure to give us credit for the design. That's basically it :)
+                                    </p>
+                                </section>
+                            </div>
+                        </div>
+                    </footer>
+</body>
+</html>
