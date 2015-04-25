@@ -7,10 +7,9 @@
     Anonymize Data
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="SubHeading1" runat="server">
-    Upload Your Anonymized Evar Data Here
+    Anonymize EVAR data before upload
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="MainContent" runat="server">
-Please use the following website to anonymize and zip your patient's dicom files. <br />
-http://www.dclunie.com/pixelmed/software/webstart/DicomCleanerUsage.html <br /> add more steps to guide the surgeon.
-
+Click <a href="http://www.dclunie.com/pixelmed/software/webstart/DicomCleanerUsage.html">here</a> to anonymize EVAR data.<br />
+Follow the instructions and click the next button when you are ready to proceed to the next step.<br />
 </asp:Content>
