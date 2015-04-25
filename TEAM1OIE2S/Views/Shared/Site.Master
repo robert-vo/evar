@@ -49,7 +49,7 @@
             <li>
                 <%: Html.ActionLink("Testimonials", "Testimonials", "Home")%></li>
             <li>
-                <%: Html.ActionLink("Upload", "Anonymize", "Home")%></li>
+                <%: Html.ActionLink("Anonymize EVAR Data", "Anonymize", "Home")%></li>
             <li>
                 <%: Html.ActionLink("Upload your EVAR zip folder here", "UploadAndStoreEVARMetaData", "Data")%></li>
         </ul>

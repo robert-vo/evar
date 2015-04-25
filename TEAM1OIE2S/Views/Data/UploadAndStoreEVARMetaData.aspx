@@ -13,10 +13,87 @@
 </asp:Content>
 
 <asp:Content ID="Content4" ContentPlaceHolderID="MainContent" runat="server">
-    <form action="" method="post" enctype="multipart/form-data">
+    <form action="" method="post" enctype="multipart/form-data" runat="server">
     <input type="file" name="file" id="file" />
-    <input type="submit" />
-    </form>
-
-</asp:Content>
     
+    Patient Number:<br />
+
+    <br />
+    Date of Surgery<asp:TextBox ID="txtSurgeryDate" runat="server" 
+        Width="100px"></asp:TextBox>
+    <br />
+    <h3><strong>
+        Endograft Characteristics
+    </strong></h3>
+    Brand<asp:DropDownList ID="drpBrand" runat="server" Width="200">
+    </asp:DropDownList>
+    <br />
+    <table>
+        <tr>
+            <th />
+            <th>
+                Diameter
+            </th>
+            <th>
+                Length
+            </th>
+        </tr>
+        <tr>
+            <td>
+                Endograft Body
+            </td>
+            <td>
+                <center>
+        <asp:TextBox ID="txtBodyDiam" runat="server" Height="25px" Width="100px"></asp:TextBox></center>
+            </td>
+            <td>
+                <center>
+        <asp:TextBox ID="txtBodyLeng" runat="server" Height="25px" Width="100px"></asp:TextBox></center>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Unilateral Leg
+            </td>
+            <td>
+                <center>
+        <asp:TextBox ID="txtUniDiam" runat="server" Height="25px" Width="100px"></asp:TextBox></center>
+            </td>
+            <td>
+                <center>
+        <asp:TextBox ID="txtUniLeng" runat="server" Height="25px" Width="100px"></asp:TextBox></center>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Contralateral Leg
+            </td>
+            <td>
+                <center>
+        <asp:TextBox ID="txtContraDiam" runat="server" Height="25px" Width="100px"></asp:TextBox></center>
+            </td>
+            <td>
+                <center>
+        <asp:TextBox ID="txtContraLeng" runat="server" Height="25px" Width="100px"></asp:TextBox></center>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Entry Point
+            </td>
+            <td>
+                <center>
+        <asp:RadioButton ID="radLeft" runat="server" Text="Left" />
+        </center>
+            </td>
+            <td>
+                <center>
+        <asp:RadioButton ID="radRight" runat="server" Text="Right" /></center>
+            </td>
+        </tr>
+    </table>
+    <br />
+    <asp:Button ID="btnUpload" runat="server" Text="Upload Anonymized Patient Data" />
+    </form>
+</asp:Content>
+

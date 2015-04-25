@@ -11,6 +11,6 @@
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="MainContent" runat="server">
 Please use the following website to anonymize and zip your patient's dicom files. <br />
-http://www.dclunie.com/pixelmed/software/webstart/DicomCleanerUsage.html
+http://www.dclunie.com/pixelmed/software/webstart/DicomCleanerUsage.html <br /> add more steps to guide the surgeon.
 
 </asp:Content>
