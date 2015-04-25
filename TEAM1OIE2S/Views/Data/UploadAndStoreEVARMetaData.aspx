@@ -1,16 +1,22 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Content.Master" Inherits="System.Web.Mvc.ViewPage" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-    Anonymize Page
+    Upload Page
 </asp:Content>
+
 <asp:Content ID="Content2" ContentPlaceHolderID="Heading1" runat="server">
-    Anonymize Data
+    Upload
 </asp:Content>
+
 <asp:Content ID="Content3" ContentPlaceHolderID="SubHeading1" runat="server">
-    Upload Your Anonymized Evar Data Here
+    Upload Anonymized Zip File to Server
 </asp:Content>
+
 <asp:Content ID="Content4" ContentPlaceHolderID="MainContent" runat="server">
-Please use the following website to anonymize and zip your patient's dicom files. <br />
-http://www.dclunie.com/pixelmed/software/webstart/DicomCleanerUsage.html
+    <form action="" method="post" enctype="multipart/form-data">
+    <input type="file" name="file" id="file" />
+    <input type="submit" />
+    </form>
 
 </asp:Content>
+    
