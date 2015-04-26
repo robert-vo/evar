@@ -45,16 +45,29 @@ namespace SEProj.Controllers
             System.Diagnostics.Debug.WriteLine(model.ContralateralLegLength);
             System.Diagnostics.Debug.WriteLine(model.EntryPoint);
 
-
             var fileName = Path.GetFileName(file.FileName);
             var path = Path.Combine(Server.MapPath("~/App_Data/"), fileName);
-            file.SaveAs(path);
+            char[] delimiterChars = { '.' };
+            string[] words = fileName.Split(delimiterChars);
+            if (words[1] == "zip")
+            {
+                System.Diagnostics.Debug.WriteLine(fileName + " is a zip");
+                file.SaveAs(path);
+                ExtractZipFile(path, null, "C://unzip");
+                System.Diagnostics.Debug.WriteLine("unzipping zip file from " + path + " to C://unzip");
+                
+            }
+            else
+            {
+                System.Diagnostics.Debug.Write(fileName + " is NOT a zip!!");
+            }
+                
             var dcm = DICOMObject.Read(@"C:\Users\dropbox\Desktop\export\DICOM\I0");
             var allDescendants = dcm.AllElements;
             System.Diagnostics.Debug.WriteLine(dcm.FindFirst("00100010")); //Patient's name NONE^NONE
             System.Diagnostics.Debug.WriteLine(dcm.FindFirst("00080020"));
             System.Diagnostics.Debug.WriteLine(dcm.FindFirst("00100030"));
-            //ExtractZipFile(path, null, "C://unzip");
+
             return RedirectToAction("UploadAndStoreEVARMetaData");
         }
         public void ExtractZipFile(string archiveFilenameIn, string password, string outFolder)
