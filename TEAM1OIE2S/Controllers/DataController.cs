@@ -11,6 +11,8 @@ using ICSharpCode.SharpZipLib.Core;
 using ICSharpCode.SharpZipLib.Zip;
 
 using TEAM1OIE2S.Models;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace SEProj.Controllers
 {
@@ -34,20 +36,42 @@ namespace SEProj.Controllers
         [HttpPost]
         public ActionResult UploadAndStoreEVARMetaData(HttpPostedFileBase file, SurgeonUploadModel model)
         {
-            System.Diagnostics.Debug.WriteLine("in evar meta data upload");
-            System.Diagnostics.Debug.WriteLine(model.DateOfSurgery);
-            System.Diagnostics.Debug.WriteLine(model.Brand);
-            System.Diagnostics.Debug.WriteLine(model.EndograftBodyDiameter);
-            System.Diagnostics.Debug.WriteLine(model.EndograftBodyLength);
-            System.Diagnostics.Debug.WriteLine(model.UnilateralLegDiameter);
-            System.Diagnostics.Debug.WriteLine(model.UnilateralLegLength);
-            System.Diagnostics.Debug.WriteLine(model.ContralateralLegDiameter);
-            System.Diagnostics.Debug.WriteLine(model.ContralateralLegLength);
+            SqlConnection connection = new SqlConnection(@"Data Source=sqlserver.cs.uh.edu,1044; User ID = TEAM1OIE2S; Password = TEAM1OIE2S#; Initial Catalog = TEAM1OIE2S");
+            string sql = "INSERT INTO BRAND(BrandName) Values(@BrandName)";
+            
+            
+            SqlCommand cmd = new SqlCommand(sql, connection);
+            cmd.CommandType = CommandType.Text;
+            //SqlParameter p1 = new SqlParameter("DateOfSurgery", model.DateOfSurgery);
+            SqlParameter p2 = new SqlParameter("BrandName", model.BrandName);
+            cmd.Parameters.Add(p2);
             System.Diagnostics.Debug.WriteLine(model.EntryPoint);
+            //SqlParameter p3 = new SqlParameter("EndograftBodyDiameter", model.EndograftBodyDiameter);
+            //SqlParameter p4 = new SqlParameter("EndograftBodyLength", model.EndograftBodyLength);
+            //SqlParameter p5 = new SqlParameter("UnilateralLegDiameter", model.UnilateralLegDiameter);
+            //SqlParameter p6 = new SqlParameter("UnilateralLegLength", model.UnilateralLegLength);
+            //SqlParameter p7 = new SqlParameter("ContralateralLegDiameter", model.ContralateralLegDiameter);
+            //SqlParameter p8 = new SqlParameter("ContralateralLegLength", model.ContralateralLegLength);
+            //SqlParameter p9 = new SqlParameter("EntryPoint", model.EntryPoint);
+            /*
+            cmd.Parameters.Add(p1);
+            cmd.Parameters.Add(p2);
+            cmd.Parameters.Add(p3);
+            cmd.Parameters.Add(p4);
+            cmd.Parameters.Add(p5);
+            cmd.Parameters.Add(p6);
+            cmd.Parameters.Add(p7);
+            cmd.Parameters.Add(p8);
+            cmd.Parameters.Add(p9);*/
+            connection.Open();
+           
+            cmd.ExecuteNonQuery();
 
+
+
+            /*
             var fileName = Path.GetFileName(file.FileName);
             var path = Path.Combine(Server.MapPath("~/App_Data/"), fileName);
-
             if (fileName.Split('.')[1] == "zip")
             {
                 file.SaveAs(path);
@@ -59,7 +83,7 @@ namespace SEProj.Controllers
             }
             
             ParseDICOMFiles(DICOMObject.Read(@"C:\Users\dropbox\Desktop\export\DICOM\I0"));
-            
+            */
             return RedirectToAction("UploadAndStoreEVARMetaData");
         }
 
