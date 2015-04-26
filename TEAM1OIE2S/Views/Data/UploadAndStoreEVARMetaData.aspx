@@ -20,8 +20,8 @@
         <%: Html.EditorFor(model => model.DateOfSurgery, new { style = "width:100%" })%>
     </div>
     <div>
-        <%: Html.LabelFor(model => model.Brand)%>
-        <%: Html.TextBoxFor(model => model.Brand, new { style = "width:100%" })%>
+        <%: Html.LabelFor(model => model.BrandName)%>
+        <%: Html.DropDownListFor(model => model.BrandName, new SelectList(new[] { "Brand1", "Brand2", "Brand3", "Brand4" }))%>
     </div>
     <div>
         <%: Html.LabelFor(model => model.EndograftBodyDiameter)%>
@@ -49,7 +49,10 @@
     </div>
     <div>
         <%: Html.LabelFor(model => model.EntryPoint)%>
-        <%: Html.TextBoxFor(model => model.EntryPoint, new { style = "width:100%" })%>
+        Left
+        <%: Html.RadioButtonFor(m => m.EntryPoint, "Left")%>
+        Right   
+        <%: Html.RadioButtonFor(m => m.EntryPoint, "Right")%>
     </div>
     <div>
         <input type="submit" value="Save" />
