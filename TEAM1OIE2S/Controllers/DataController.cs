@@ -47,29 +47,34 @@ namespace SEProj.Controllers
 
             var fileName = Path.GetFileName(file.FileName);
             var path = Path.Combine(Server.MapPath("~/App_Data/"), fileName);
-            char[] delimiterChars = { '.' };
-            string[] words = fileName.Split(delimiterChars);
-            if (words[1] == "zip")
+
+            if (fileName.Split('.')[1] == "zip")
             {
-                System.Diagnostics.Debug.WriteLine(fileName + " is a zip");
                 file.SaveAs(path);
                 ExtractZipFile(path, null, "C://unzip");
-                System.Diagnostics.Debug.WriteLine("unzipping zip file from " + path + " to C://unzip");
-                
             }
             else
             {
                 System.Diagnostics.Debug.Write(fileName + " is NOT a zip!!");
             }
-                
-            var dcm = DICOMObject.Read(@"C:\Users\dropbox\Desktop\export\DICOM\I0");
+            
+            ParseDICOMFiles(DICOMObject.Read(@"C:\Users\dropbox\Desktop\export\DICOM\I0"));
+            
+            return RedirectToAction("UploadAndStoreEVARMetaData");
+        }
+
+        public void ParseDICOMFiles(DICOMObject dcm)
+        {
+            System.Diagnostics.Debug.WriteLine("in parse dicom");
+            //var dcm = DICOMObject.Read(@"C:\Users\dropbox\Desktop\export\DICOM\I0");
             var allDescendants = dcm.AllElements;
+            System.Diagnostics.Debug.WriteLine(allDescendants);
+            System.Diagnostics.Debug.WriteLine(allDescendants[1]);
             System.Diagnostics.Debug.WriteLine(dcm.FindFirst("00100010")); //Patient's name NONE^NONE
             System.Diagnostics.Debug.WriteLine(dcm.FindFirst("00080020"));
             System.Diagnostics.Debug.WriteLine(dcm.FindFirst("00100030"));
-
-            return RedirectToAction("UploadAndStoreEVARMetaData");
         }
+
         public void ExtractZipFile(string archiveFilenameIn, string password, string outFolder)
         {
             ZipFile zf = null;
