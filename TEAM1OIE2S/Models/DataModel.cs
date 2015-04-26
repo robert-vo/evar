@@ -14,15 +14,15 @@ namespace TEAM1OIE2S.Models
     public class SurgeonUploadModel
     {
         [Required]
-        [DisplayName("MonthOfSurgery")]
+        [DisplayName("Month Of Surgery")]
         public string MonthOfSurgery { get; set; }
 
         [Required]
-        [DisplayName("DayOfSurgery")]
+        [DisplayName("Day Of Surgery")]
         public string DayOfSurgery { get; set; }
 
         [Required]
-        [DisplayName("YearOfSurgery")]
+        [DisplayName("Year Of Surgery")]
         public string YearOfSurgery { get; set; }
 
         [Required]
