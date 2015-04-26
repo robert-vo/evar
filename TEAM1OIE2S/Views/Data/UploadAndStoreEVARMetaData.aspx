@@ -17,7 +17,7 @@
     </div>
     <div>
         <%: Html.LabelFor(model => model.MonthOfSurgery)%>
-        <%: Html.DropDownListFor(model => model.MonthOfSurgery, new SelectList(new[] { "January", "February", "March", "ADD MORE MONTHS HERE" }))%>
+        <%: Html.DropDownListFor(model => model.MonthOfSurgery, new SelectList(new[] { "January", "February", "March", "April" }))%>
     </div>
     <div>
         <%: Html.LabelFor(model => model.DayOfSurgery)%>
