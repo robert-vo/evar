@@ -13,9 +13,17 @@ namespace TEAM1OIE2S.Models
     #region Models
     public class SurgeonUploadModel
     {
-        [DisplayName("Date Of Surgery")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
-        public DateTime DateOfSurgery { get; set; }
+        [Required]
+        [DisplayName("MonthOfSurgery")]
+        public string MonthOfSurgery { get; set; }
+
+        [Required]
+        [DisplayName("DayOfSurgery")]
+        public string DayOfSurgery { get; set; }
+
+        [Required]
+        [DisplayName("YearOfSurgery")]
+        public string YearOfSurgery { get; set; }
 
         [Required]
         [DisplayName("BrandName")]
