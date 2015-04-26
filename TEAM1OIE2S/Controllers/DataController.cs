@@ -4,12 +4,10 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.IO;
-
 using EvilDICOM.Core;
 using EvilDICOM.Core.Helpers;
 using ICSharpCode.SharpZipLib.Core;
 using ICSharpCode.SharpZipLib.Zip;
-
 using TEAM1OIE2S.Models;
 using System.Data.SqlClient;
 using System.Data;
@@ -38,54 +36,54 @@ namespace SEProj.Controllers
         {
             int brandManufacturerID = getBrandID(model.BrandName);
             int month = getMonthFromString(model.MonthOfSurgery);
-            try
+            try //if a file is uploaded...
             {
                 var fileName = Path.GetFileName(file.FileName);
                 var path = Path.Combine(Server.MapPath("~/App_Data/"), fileName);
-                if (fileName.Split('.')[1] == "zip")
+                if (fileName.Split('.')[1] == "zip") //if the file uploaded is a "~.zip" file
                 {
-                    file.SaveAs(path);
-                    ExtractZipFile(path, null, "C://unzip");
+                    file.SaveAs(path); //save it to the ~/App_Data path
+                    ExtractZipFile(path, null, "C://unzip"); //extract zip to C:/unzip
+                    //establishes a sql connection and inserts the values into the endograft table.
+                    SqlConnection connection = new SqlConnection(@"Data Source=sqlserver.cs.uh.edu,1044; User ID = TEAM1OIE2S; Password = TEAM1OIE2S#; Initial Catalog = TEAM1OIE2S");
+                    string sql = "INSERT INTO Endograft(diameter, length, unilateralLegDiameter, unilateralLegLength, controlateralLegDiameter, controlateralLegLength, entryPoint, brandID) Values (@diameter, @length, @UnilateralLegDiameter, @UnilateralLegLength, @ContralateralLegDiameter, @ContralateralLegLength, @EntryPoint, @brandID)";
+                    SqlCommand cmd = new SqlCommand(sql, connection);
+                    cmd.CommandType = CommandType.Text;
+                    SqlParameter p1 = new SqlParameter("diameter", model.EndograftBodyDiameter);
+                    SqlParameter p2 = new SqlParameter("length", model.EndograftBodyLength);
+                    SqlParameter p3 = new SqlParameter("UnilateralLegDiameter", model.UnilateralLegDiameter);
+                    SqlParameter p4 = new SqlParameter("UnilateralLegLength", model.UnilateralLegLength);
+                    SqlParameter p5 = new SqlParameter("ContralateralLegDiameter", model.ContralateralLegDiameter);
+                    SqlParameter p6 = new SqlParameter("ContralateralLegLength", model.ContralateralLegLength);
+                    SqlParameter p7 = new SqlParameter("EntryPoint", model.EntryPoint);
+                    SqlParameter p8 = new SqlParameter("brandID", brandManufacturerID);
+                    cmd.Parameters.Add(p1);
+                    cmd.Parameters.Add(p2);
+                    cmd.Parameters.Add(p3);
+                    cmd.Parameters.Add(p4);
+                    cmd.Parameters.Add(p5);
+                    cmd.Parameters.Add(p6);
+                    cmd.Parameters.Add(p7);
+                    cmd.Parameters.Add(p8);
+                    connection.Open();
+                    cmd.ExecuteNonQuery();
                 }
-                else
+                else //not a zip
                 {
                     System.Diagnostics.Debug.Write(fileName + " is NOT a zip!!");
                 }
-                SqlConnection connection = new SqlConnection(@"Data Source=sqlserver.cs.uh.edu,1044; User ID = TEAM1OIE2S; Password = TEAM1OIE2S#; Initial Catalog = TEAM1OIE2S");
-                string sql = "INSERT INTO Endograft(diameter, length, unilateralLegDiameter, unilateralLegLength, controlateralLegDiameter, controlateralLegLength, entryPoint, brandID) Values (@diameter, @length, @UnilateralLegDiameter, @UnilateralLegLength, @ContralateralLegDiameter, @ContralateralLegLength, @EntryPoint, @brandID)";
-                SqlCommand cmd = new SqlCommand(sql, connection);
-                cmd.CommandType = CommandType.Text;
-                SqlParameter p1 = new SqlParameter("diameter", model.EndograftBodyDiameter);
-                SqlParameter p2 = new SqlParameter("length", model.EndograftBodyLength);
-                SqlParameter p3 = new SqlParameter("UnilateralLegDiameter", model.UnilateralLegDiameter);
-                SqlParameter p4 = new SqlParameter("UnilateralLegLength", model.UnilateralLegLength);
-                SqlParameter p5 = new SqlParameter("ContralateralLegDiameter", model.ContralateralLegDiameter);
-                SqlParameter p6 = new SqlParameter("ContralateralLegLength", model.ContralateralLegLength);
-                SqlParameter p7 = new SqlParameter("EntryPoint", model.EntryPoint);
-                SqlParameter p8 = new SqlParameter("brandID", brandManufacturerID);
-                cmd.Parameters.Add(p1);
-                cmd.Parameters.Add(p2);
-                cmd.Parameters.Add(p3);
-                cmd.Parameters.Add(p4);
-                cmd.Parameters.Add(p5);
-                cmd.Parameters.Add(p6);
-                cmd.Parameters.Add(p7);
-                cmd.Parameters.Add(p8);
-                connection.Open();
-                cmd.ExecuteNonQuery();
             }
-            catch (System.NullReferenceException e)
+            catch (System.NullReferenceException e) //a file isn't uploaded
             {
                 System.Diagnostics.Debug.WriteLine(e.Message);
             }
-            /*
-            ParseDICOMFiles(DICOMObject.Read(@"C:\Users\dropbox\Desktop\export\DICOM\I0"));
-            */
+
             return RedirectToAction("UploadAndStoreEVARMetaData");
         }
 
         public void ParseDICOMFiles(DICOMObject dcm)
         {
+            //ParseDICOMFiles(DICOMObject.Read(@"C:\Users\dropbox\Desktop\export\DICOM\I0"));
             System.Diagnostics.Debug.WriteLine("in parse dicom");
             //var dcm = DICOMObject.Read(@"C:\Users\dropbox\Desktop\export\DICOM\I0");
             var allDescendants = dcm.AllElements;
