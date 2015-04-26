@@ -27,12 +27,25 @@ namespace SEProj.Controllers
 
         public ActionResult UploadAndStoreEVARMetaData()
         {
+            SurgeonUploadModel model = new SurgeonUploadModel();
             return View();
         }
 
         [HttpPost]
-        public ActionResult UploadAndStoreEVARMetaData(HttpPostedFileBase file)
+        public ActionResult UploadAndStoreEVARMetaData(HttpPostedFileBase file, SurgeonUploadModel model)
         {
+            System.Diagnostics.Debug.WriteLine("in evar meta data upload");
+            System.Diagnostics.Debug.WriteLine(model.DateOfSurgery);
+            System.Diagnostics.Debug.WriteLine(model.Brand);
+            System.Diagnostics.Debug.WriteLine(model.EndograftBodyDiameter);
+            System.Diagnostics.Debug.WriteLine(model.EndograftBodyLength);
+            System.Diagnostics.Debug.WriteLine(model.UnilateralLegDiameter);
+            System.Diagnostics.Debug.WriteLine(model.UnilateralLegLength);
+            System.Diagnostics.Debug.WriteLine(model.ContralateralLegDiameter);
+            System.Diagnostics.Debug.WriteLine(model.ContralateralLegLength);
+            System.Diagnostics.Debug.WriteLine(model.EntryPoint);
+
+
             var fileName = Path.GetFileName(file.FileName);
             var path = Path.Combine(Server.MapPath("~/App_Data/"), fileName);
             file.SaveAs(path);
@@ -41,9 +54,7 @@ namespace SEProj.Controllers
             System.Diagnostics.Debug.WriteLine(dcm.FindFirst("00100010")); //Patient's name NONE^NONE
             System.Diagnostics.Debug.WriteLine(dcm.FindFirst("00080020"));
             System.Diagnostics.Debug.WriteLine(dcm.FindFirst("00100030"));
-
-            ExtractZipFile(path, null, "C:\\unzip");
-
+            //ExtractZipFile(path, null, "C://unzip");
             return RedirectToAction("UploadAndStoreEVARMetaData");
         }
         public void ExtractZipFile(string archiveFilenameIn, string password, string outFolder)
