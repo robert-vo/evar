@@ -36,52 +36,49 @@ namespace SEProj.Controllers
         [HttpPost]
         public ActionResult UploadAndStoreEVARMetaData(HttpPostedFileBase file, SurgeonUploadModel model)
         {
-            SqlConnection connection = new SqlConnection(@"Data Source=sqlserver.cs.uh.edu,1044; User ID = TEAM1OIE2S; Password = TEAM1OIE2S#; Initial Catalog = TEAM1OIE2S");
-            string sql = "INSERT INTO BRAND(BrandName) Values(@BrandName)";
-            
-            
-            SqlCommand cmd = new SqlCommand(sql, connection);
-            cmd.CommandType = CommandType.Text;
-            //SqlParameter p1 = new SqlParameter("DateOfSurgery", model.DateOfSurgery);
-            SqlParameter p2 = new SqlParameter("BrandName", model.BrandName);
-            cmd.Parameters.Add(p2);
-            System.Diagnostics.Debug.WriteLine(model.EntryPoint);
-            //SqlParameter p3 = new SqlParameter("EndograftBodyDiameter", model.EndograftBodyDiameter);
-            //SqlParameter p4 = new SqlParameter("EndograftBodyLength", model.EndograftBodyLength);
-            //SqlParameter p5 = new SqlParameter("UnilateralLegDiameter", model.UnilateralLegDiameter);
-            //SqlParameter p6 = new SqlParameter("UnilateralLegLength", model.UnilateralLegLength);
-            //SqlParameter p7 = new SqlParameter("ContralateralLegDiameter", model.ContralateralLegDiameter);
-            //SqlParameter p8 = new SqlParameter("ContralateralLegLength", model.ContralateralLegLength);
-            //SqlParameter p9 = new SqlParameter("EntryPoint", model.EntryPoint);
-            /*
-            cmd.Parameters.Add(p1);
-            cmd.Parameters.Add(p2);
-            cmd.Parameters.Add(p3);
-            cmd.Parameters.Add(p4);
-            cmd.Parameters.Add(p5);
-            cmd.Parameters.Add(p6);
-            cmd.Parameters.Add(p7);
-            cmd.Parameters.Add(p8);
-            cmd.Parameters.Add(p9);*/
-            connection.Open();
-           
-            cmd.ExecuteNonQuery();
-
-
-
-            /*
-            var fileName = Path.GetFileName(file.FileName);
-            var path = Path.Combine(Server.MapPath("~/App_Data/"), fileName);
-            if (fileName.Split('.')[1] == "zip")
+            int brandManufacturerID = getBrandID(model.BrandName);
+            int month = getMonthFromString(model.MonthOfSurgery);
+            try
             {
-                file.SaveAs(path);
-                ExtractZipFile(path, null, "C://unzip");
+                var fileName = Path.GetFileName(file.FileName);
+                var path = Path.Combine(Server.MapPath("~/App_Data/"), fileName);
+                if (fileName.Split('.')[1] == "zip")
+                {
+                    file.SaveAs(path);
+                    ExtractZipFile(path, null, "C://unzip");
+                }
+                else
+                {
+                    System.Diagnostics.Debug.Write(fileName + " is NOT a zip!!");
+                }
+                SqlConnection connection = new SqlConnection(@"Data Source=sqlserver.cs.uh.edu,1044; User ID = TEAM1OIE2S; Password = TEAM1OIE2S#; Initial Catalog = TEAM1OIE2S");
+                string sql = "INSERT INTO Endograft(diameter, length, unilateralLegDiameter, unilateralLegLength, controlateralLegDiameter, controlateralLegLength, entryPoint, brandID) Values (@diameter, @length, @UnilateralLegDiameter, @UnilateralLegLength, @ContralateralLegDiameter, @ContralateralLegLength, @EntryPoint, @brandID)";
+                SqlCommand cmd = new SqlCommand(sql, connection);
+                cmd.CommandType = CommandType.Text;
+                SqlParameter p1 = new SqlParameter("diameter", model.EndograftBodyDiameter);
+                SqlParameter p2 = new SqlParameter("length", model.EndograftBodyLength);
+                SqlParameter p3 = new SqlParameter("UnilateralLegDiameter", model.UnilateralLegDiameter);
+                SqlParameter p4 = new SqlParameter("UnilateralLegLength", model.UnilateralLegLength);
+                SqlParameter p5 = new SqlParameter("ContralateralLegDiameter", model.ContralateralLegDiameter);
+                SqlParameter p6 = new SqlParameter("ContralateralLegLength", model.ContralateralLegLength);
+                SqlParameter p7 = new SqlParameter("EntryPoint", model.EntryPoint);
+                SqlParameter p8 = new SqlParameter("brandID", brandManufacturerID);
+                cmd.Parameters.Add(p1);
+                cmd.Parameters.Add(p2);
+                cmd.Parameters.Add(p3);
+                cmd.Parameters.Add(p4);
+                cmd.Parameters.Add(p5);
+                cmd.Parameters.Add(p6);
+                cmd.Parameters.Add(p7);
+                cmd.Parameters.Add(p8);
+                connection.Open();
+                cmd.ExecuteNonQuery();
             }
-            else
+            catch (System.NullReferenceException e)
             {
-                System.Diagnostics.Debug.Write(fileName + " is NOT a zip!!");
+                System.Diagnostics.Debug.WriteLine(e.Message);
             }
-            
+            /*
             ParseDICOMFiles(DICOMObject.Read(@"C:\Users\dropbox\Desktop\export\DICOM\I0"));
             */
             return RedirectToAction("UploadAndStoreEVARMetaData");
@@ -97,6 +94,53 @@ namespace SEProj.Controllers
             System.Diagnostics.Debug.WriteLine(dcm.FindFirst("00100010")); //Patient's name NONE^NONE
             System.Diagnostics.Debug.WriteLine(dcm.FindFirst("00080020"));
             System.Diagnostics.Debug.WriteLine(dcm.FindFirst("00100030"));
+        }
+
+        public int getBrandID(string brand)
+        {
+            int id = 0;
+            switch (brand)
+            {
+                case "Brand 1":
+                    id = 1;
+                    break;
+                case "Brand 2":
+                    id = 2;
+                    break;
+                case "Brand 3":
+                    id = 3;
+                    break;
+                case "Brand 4":
+                    id = 4;
+                    break;
+                case "Brand 5":
+                    id = 5;
+                    break;
+                default:
+                    break;
+            }
+            return id;
+        }
+        public int getMonthFromString(string month)
+        {
+            int num = 0;
+            switch (month)
+            {
+                case "January":
+                    num = 01;
+                    break;
+                case "February":
+                    num = 02;
+                    break;
+                case "March":
+                    num = 03;
+                    break;
+                //add for other months.....
+                default:
+                    System.Diagnostics.Debug.WriteLine("NOT A VALID MONTH");
+                    break;
+            }
+            return num;
         }
 
         public void ExtractZipFile(string archiveFilenameIn, string password, string outFolder)
