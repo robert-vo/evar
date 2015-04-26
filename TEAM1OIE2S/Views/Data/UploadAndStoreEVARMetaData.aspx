@@ -1,98 +1,58 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Content.Master" Inherits="System.Web.Mvc.ViewPage" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Content.Master" Inherits="System.Web.Mvc.ViewPage<TEAM1OIE2S.Models.SurgeonUploadModel>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
     Upload Page
 </asp:Content>
-
 <asp:Content ID="Content2" ContentPlaceHolderID="Heading1" runat="server">
     Upload
 </asp:Content>
-
 <asp:Content ID="Content3" ContentPlaceHolderID="SubHeading1" runat="server">
     Upload Anonymized Zip File to Server
 </asp:Content>
-
 <asp:Content ID="Content4" ContentPlaceHolderID="MainContent" runat="server">
-    <form action="" method="post" enctype="multipart/form-data" runat="server">
-    <input type="file" name="file" id="file" />
-    
-    Patient Number:<br />
-    <br />
-    Date of Surgery<asp:TextBox ID="txtSurgeryDate" runat="server" 
-        Width="100px"></asp:TextBox>
-    <br />
-    <h3><strong>
-        Endograft Characteristics
-    </strong></h3>
-    Brand<asp:DropDownList ID="drpBrand" runat="server" Width="200">
-    </asp:DropDownList>
-    <br />
-    <table>
-        <tr>
-            <th />
-            <th>
-                Diameter
-            </th>
-            <th>
-                Length
-            </th>
-        </tr>
-        <tr>
-            <td>
-                Endograft Body
-            </td>
-            <td>
-                <center>
-        <asp:TextBox ID="txtBodyDiam" runat="server" Height="25px" Width="100px"></asp:TextBox></center>
-            </td>
-            <td>
-                <center>
-        <asp:TextBox ID="txtBodyLeng" runat="server" Height="25px" Width="100px"></asp:TextBox></center>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Unilateral Leg
-            </td>
-            <td>
-                <center>
-        <asp:TextBox ID="txtUniDiam" runat="server" Height="25px" Width="100px"></asp:TextBox></center>
-            </td>
-            <td>
-                <center>
-        <asp:TextBox ID="txtUniLeng" runat="server" Height="25px" Width="100px"></asp:TextBox></center>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Contralateral Leg
-            </td>
-            <td>
-                <center>
-        <asp:TextBox ID="txtContraDiam" runat="server" Height="25px" Width="100px"></asp:TextBox></center>
-            </td>
-            <td>
-                <center>
-        <asp:TextBox ID="txtContraLeng" runat="server" Height="25px" Width="100px"></asp:TextBox></center>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Entry Point
-            </td>
-            <td>
-                <center>
-        <asp:RadioButton ID="radLeft" runat="server" Text="Left" />
-        </center>
-            </td>
-            <td>
-                <center>
-        <asp:RadioButton ID="radRight" runat="server" Text="Right" /></center>
-            </td>
-        </tr>
-    </table>
-    <br />
-    <asp:Button ID="btnUpload" runat="server" Text="Upload Anonymized Patient Data" />
-    </form>
+    <% using (Html.BeginForm("UploadAndStoreEVARMetaData", "Data", FormMethod.Post, new { enctype = "multipart/form-data" }))
+       { %>
+    <div>
+        <input type="file" name="file" />
+    </div>
+    <div>
+        <%: Html.LabelFor(model => model.DateOfSurgery)%>
+        <%: Html.EditorFor(model => model.DateOfSurgery, new { style = "width:100%" })%>
+    </div>
+    <div>
+        <%: Html.LabelFor(model => model.Brand)%>
+        <%: Html.TextBoxFor(model => model.Brand, new { style = "width:100%" })%>
+    </div>
+    <div>
+        <%: Html.LabelFor(model => model.EndograftBodyDiameter)%>
+        <%: Html.TextBoxFor(model => model.EndograftBodyDiameter, new { style = "width:100%" })%>
+    </div>
+    <div>
+        <%: Html.LabelFor(model => model.EndograftBodyLength)%>
+        <%: Html.TextBoxFor(model => model.EndograftBodyLength, new { style = "width:100%" })%>
+    </div>
+    <div>
+        <%: Html.LabelFor(model => model.UnilateralLegDiameter)%>
+        <%: Html.TextBoxFor(model => model.UnilateralLegDiameter, new { style = "width:100%" })%>
+    </div>
+    <div>
+        <%: Html.LabelFor(model => model.UnilateralLegLength)%>
+        <%: Html.TextBoxFor(model => model.UnilateralLegLength, new { style = "width:100%" })%>
+    </div>
+    <div>
+        <%: Html.LabelFor(model => model.ContralateralLegDiameter)%>
+        <%: Html.TextBoxFor(model => model.ContralateralLegDiameter, new { style = "width:100%" })%>
+    </div>
+    <div>
+        <%: Html.LabelFor(model => model.ContralateralLegLength)%>
+        <%: Html.TextBoxFor(model => model.ContralateralLegLength, new { style = "width:100%" })%>
+    </div>
+    <div>
+        <%: Html.LabelFor(model => model.EntryPoint)%>
+        <%: Html.TextBoxFor(model => model.EntryPoint, new { style = "width:100%" })%>
+    </div>
+    <div>
+        <input type="submit" value="Save" />
+    </div>
+    <% } %>
 </asp:Content>
-
