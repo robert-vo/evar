@@ -18,8 +18,8 @@ namespace TEAM1OIE2S.Models
         public DateTime DateOfSurgery { get; set; }
 
         [Required]
-        [DisplayName("Brand")]
-        public string Brand { get; set; }
+        [DisplayName("BrandName")]
+        public string BrandName { get; set; }
 
         [Required]
         [DisplayName("Endograft Body Diameter")]
