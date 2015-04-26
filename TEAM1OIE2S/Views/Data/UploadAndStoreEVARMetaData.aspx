@@ -16,12 +16,20 @@
         <input type="file" name="file" />
     </div>
     <div>
-        <%: Html.LabelFor(model => model.DateOfSurgery)%>
-        <%: Html.EditorFor(model => model.DateOfSurgery, new { style = "width:100%" })%>
+        <%: Html.LabelFor(model => model.MonthOfSurgery)%>
+        <%: Html.DropDownListFor(model => model.MonthOfSurgery, new SelectList(new[] { "January", "February", "March", "ADD MORE MONTHS HERE" }))%>
+    </div>
+    <div>
+        <%: Html.LabelFor(model => model.DayOfSurgery)%>
+        <%: Html.DropDownListFor(model => model.DayOfSurgery, new SelectList(new[] { "1", "2", "3", "4" }))%>
+    </div>
+    <div>
+        <%: Html.LabelFor(model => model.YearOfSurgery)%>
+        <%: Html.DropDownListFor(model => model.YearOfSurgery, new SelectList(new[] { "2015", "2014", "2013", "2012", "2011", "2010" }))%>
     </div>
     <div>
         <%: Html.LabelFor(model => model.BrandName)%>
-        <%: Html.DropDownListFor(model => model.BrandName, new SelectList(new[] { "Brand1", "Brand2", "Brand3", "Brand4" }))%>
+        <%: Html.DropDownListFor(model => model.BrandName, new SelectList(new[] { "Brand 1", "Brand 2", "Brand 3", "Brand 4", "Brand 5" }))%>
     </div>
     <div>
         <%: Html.LabelFor(model => model.EndograftBodyDiameter)%>
@@ -51,7 +59,7 @@
         <%: Html.LabelFor(model => model.EntryPoint)%>
         Left
         <%: Html.RadioButtonFor(m => m.EntryPoint, "Left")%>
-        Right   
+        Right
         <%: Html.RadioButtonFor(m => m.EntryPoint, "Right")%>
     </div>
     <div>
