@@ -11,5 +11,8 @@
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="MainContent" runat="server">
 Click <a href="http://www.dclunie.com/pixelmed/software/webstart/DicomCleanerUsage.html">here</a> to anonymize EVAR data.<br />
-Follow the instructions and click the next button when you are ready to proceed to the next step.<br />
+Follow the instructions and click the next button when you are ready to proceed to the next step.
+<br />
+<br />
+<input type="button" value="NEXT" onclick="window.location.href='<%= Url.Action("UploadToServer", "Home") %>';" />
 </asp:Content>
