@@ -190,7 +190,7 @@ namespace TEAM1OIE2S.Models
     }
     #endregion
 
-        #region Validation
+#region Validation
     public static class AccountValidation
     {
         public static string ErrorCodeToString(MembershipCreateStatus createStatus)

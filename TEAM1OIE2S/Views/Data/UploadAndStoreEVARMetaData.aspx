@@ -17,7 +17,6 @@
     <input type="file" name="file" id="file" />
     
     Patient Number:<br />
-
     <br />
     Date of Surgery<asp:TextBox ID="txtSurgeryDate" runat="server" 
         Width="100px"></asp:TextBox>
