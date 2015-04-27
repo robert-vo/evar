@@ -99,21 +99,16 @@ namespace SEProj.Controllers
             int id = 0;
             switch (brand)
             {
-                case "Brand 1":
+                case "Cook":
                     id = 1;
                     break;
-                case "Brand 2":
+                case "Boston Scientific":
                     id = 2;
                     break;
-                case "Brand 3":
+                case "Medtronic":
                     id = 3;
                     break;
-                case "Brand 4":
-                    id = 4;
-                    break;
-                case "Brand 5":
-                    id = 5;
-                    break;
+                
                 default:
                     break;
             }
@@ -133,7 +128,35 @@ namespace SEProj.Controllers
                 case "March":
                     num = 03;
                     break;
-                //add for other months.....
+                case "April"
+                    num = 04;
+                    break;
+                case "May"
+                    num = 05;
+                    break;
+                case "June"
+                    num = 07;
+                    break;
+                case "July"
+                    num = 08;
+                    break;
+                case "August"
+                    num = 09;
+                    break;
+                case "September"
+                    num = 09;
+                    break;
+                case "October"
+                    num = 10;
+                    break;
+                case "November"
+                    num = 11;
+                    break;
+                case "December"
+                    num = 12;
+                    break;
+                
+                
                 default:
                     System.Diagnostics.Debug.WriteLine("NOT A VALID MONTH");
                     break;
