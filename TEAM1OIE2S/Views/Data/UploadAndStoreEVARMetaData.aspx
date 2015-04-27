@@ -24,12 +24,12 @@
                     Date Of Surgery</h3>
             </td>
             <td>
-                <%: Html.DropDownListFor(model => model.MonthOfSurgery, new SelectList(new[] { "January", "February", "March", "ADD MORE MONTHS HERE" }), new { style = "width:250px" })%>
+                <%: Html.DropDownListFor(model => model.MonthOfSurgery, new SelectList(new[] { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "Novemeber", "December" }), new { style = "width:250px" })%>
             </td>
             <td>
-                <%: Html.DropDownListFor(model => model.DayOfSurgery, new SelectList(new[] { "1", "2", "3", "4" }), new { style = "width:100px" })%>
+                <%: Html.DropDownListFor(model => model.DayOfSurgery, new SelectList(new[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }), new { style = "width:100px" })%>
             <td>
-                <%: Html.DropDownListFor(model => model.YearOfSurgery, new SelectList(new[] { "2015", "2014", "2013", "2012", "2011", "2010" }), new { style = "width:150px" })%>
+                <%: Html.DropDownListFor(model => model.YearOfSurgery, new SelectList(new[] { "2015", "2014", "2013", "2012", "2011", "2010", "2009", "2008", "2007", "2006", "2005", "2004", "2003", "2002", "2001", "2000" }), new { style = "width:150px" })%>
             </td>
         </tr>
     </table>
@@ -39,7 +39,7 @@
         </strong>
     </h3>
     
-    <p>Brand<%: Html.DropDownListFor(model => model.BrandName, new SelectList(new[] { "Brand 1", "Brand 2", "Brand 3", "Brand 4", "Brand 5" }), new { style = "width:250px" })%></p>
+    <p>Brand<%: Html.DropDownListFor(model => model.BrandName, new SelectList(new[] { "Cook", "Boston Scientific", "Medtronic" }), new { style = "width:250px" })%></p>
     
     
 
