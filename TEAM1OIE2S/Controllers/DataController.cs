@@ -128,31 +128,31 @@ namespace SEProj.Controllers
                 case "March":
                     num = 03;
                     break;
-                case "April"
+                case "April" :
                     num = 04;
                     break;
-                case "May"
+                case "May" :
                     num = 05;
                     break;
-                case "June"
+                case "June" :
                     num = 07;
                     break;
-                case "July"
+                case "July" :
                     num = 08;
                     break;
-                case "August"
+                case "August" :
                     num = 09;
                     break;
-                case "September"
+                case "September" :
                     num = 09;
                     break;
-                case "October"
+                case "October" :
                     num = 10;
                     break;
-                case "November"
+                case "November" : 
                     num = 11;
                     break;
-                case "December"
+                case "December" :
                     num = 12;
                     break;
                 
