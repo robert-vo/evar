@@ -57,10 +57,10 @@ namespace SEProj.Controllers
             {
                 System.Diagnostics.Debug.WriteLine(e);
                 System.Diagnostics.Debug.WriteLine("HELLO");
+                
                 return View("Error");
             }
 
-            return View();
         }
 
         [HttpPost]
