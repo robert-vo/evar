@@ -27,6 +27,20 @@ namespace SEProj.Controllers
             return View();
         }
 
+
+        public ActionResult SurgeonDataAnalysisInputForm()
+        {
+            System.Diagnostics.Debug.WriteLine("in constructor");
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult SurgeonDataAnalysisInputForm(SurgeonUploadModel model)
+        {
+            System.Diagnostics.Debug.WriteLine("httppost");
+            return View("SurgeonDataAnalysisInputForm");
+        }
+
         public ActionResult UploadAndStoreEVARMetaData()
         {
             SurgeonUploadModel model = new SurgeonUploadModel();
