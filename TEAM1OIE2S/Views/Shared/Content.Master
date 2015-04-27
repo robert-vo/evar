@@ -44,6 +44,8 @@
                 <%: Html.ActionLink("Anonymize EVAR Data", "Anonymize", "Home")%></li>
             <li>
                 <%: Html.ActionLink("Upload your EVAR zip folder here", "UploadAndStoreEVARMetaData", "Data")%></li>
+            <li>
+                <%: Html.ActionLink("Data Analysis Input Form", "SurgeonDataAnalysisInputForm", "Data") %></li>
         </ul>
     </nav>
     <!-- Main -->
