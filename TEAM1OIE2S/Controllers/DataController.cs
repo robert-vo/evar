@@ -30,8 +30,14 @@ namespace SEProj.Controllers
         }
 
 
+
+
         public ActionResult SurgeonDataAnalysisInputForm()
         {
+            //if valid user
+            //return view
+            //else
+            //return error
             try
             {
                 var currentUser = Membership.GetUser(User.Identity.Name);
@@ -48,7 +54,7 @@ namespace SEProj.Controllers
                 {
                     userOccupation = myReader["occupation"].ToString();
                 }
-                if (userOccupation == "Surgeon")
+                if (userOccupation == "Surgeon" || userOccupation == "Administrator" || userOccupation == "Super Administrator")
                     return View("SurgeonDataAnalysisInputForm");
                 else
                     return View("Error");
@@ -70,6 +76,7 @@ namespace SEProj.Controllers
             return View("SurgeonDataAnalysisInputForm");
         }
 
+ 
         public ActionResult UploadAndStoreEVARMetaData()
         {
             try
@@ -88,7 +95,7 @@ namespace SEProj.Controllers
                 {
                     userOccupation = myReader["occupation"].ToString();
                 }
-                if (userOccupation == "Surgeon")
+                if (userOccupation == "Surgeon" || userOccupation == "Administrator" || userOccupation == "Super Administrator")
                     return View("UploadAndStoreEVARMetaData");
                 else
                     return View("Error");
