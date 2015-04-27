@@ -1,5 +1,7 @@
 ﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
-
+<!-- Lime Talk Live Chat start -->
+<script type="text/javascript">    var limetalk = (function () { var lc = document.createElement("script"); lc.type = "text/javascript"; lc.async = true; lc.src = "//www.limetalk.com/livechat/2f7cc3a9649196783f441ea2fb7798e1"; document.getElementsByTagName("head")[0].appendChild(lc); var fnr = function (fn) { var l = limetalk; if (l.readyList) { l.ready(fn); } else { l.rl = l.rl || []; l.rl.push(fn); } }; fnr.ready = fnr; return fnr; })(); </script>
+<!-- Lime Talk Live Chat end -->
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
     <title>
