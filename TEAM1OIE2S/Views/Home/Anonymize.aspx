@@ -14,5 +14,5 @@ Click <a href="http://www.dclunie.com/pixelmed/software/webstart/DicomCleanerUsa
 Follow the instructions and click the next button when you are ready to proceed to the next step.
 <br />
 <br />
-<input type="button" value="NEXT" onclick="window.location.href='<%= Url.Action("UploadToServer", "Home") %>';" />
+<input type="button" value="NEXT" onclick="window.location.href='<%= Url.Action("UploadAndStoreEVARMetaData", "Data") %>';" />
 </asp:Content>
