@@ -11,6 +11,8 @@ using ICSharpCode.SharpZipLib.Zip;
 using TEAM1OIE2S.Models;
 using System.Data.SqlClient;
 using System.Data;
+using System.Reflection;
+using Microsoft.Office.Interop.Excel;
 
 namespace SEProj.Controllers
 {
@@ -34,7 +36,13 @@ namespace SEProj.Controllers
         [HttpPost]
         public ActionResult UploadAndStoreEVARMetaData(HttpPostedFileBase file, SurgeonUploadModel model)
         {
-            int brandManufacturerID = getBrandID(model.BrandName);
+            
+            //for(int i = 0; i < 489; i++)
+                //ParseDICOMFiles(DICOMObject.Read(@"C:\Users\dropbox\Desktop\export\DICOM\I" + i));
+            //ParseDICOMFiles(DICOMObject.Read(@"C:\Users\dropbox\Desktop\export\DICOM\I0"));
+            //ParseDICOMFiles(DICOMObject.Read(@"C:\Users\dropbox\Desktop\export\DICOMDIR"));
+            /*
+            int brandManufacturerID = getBr andID(model.BrandName);
             int month = getMonthFromString(model.MonthOfSurgery);
             try //if a file is uploaded...
             {
@@ -77,21 +85,82 @@ namespace SEProj.Controllers
             {
                 System.Diagnostics.Debug.WriteLine(e.Message);
             }
+            */
 
             return RedirectToAction("UploadAndStoreEVARMetaData");
         }
 
+        public void createExcel() //add reference to microsoft excel. project->add reference->com->microsoft excel 
+        {
+            Microsoft.Office.Interop.Excel.Application xlApp = new Microsoft.Office.Interop.Excel.Application();
+
+            if (xlApp == null)
+            {
+                Console.WriteLine("EXCEL could not be started. Check that your office installation and project references are correct.");
+            }
+            xlApp.Visible = true;
+
+            Workbook wb = xlApp.Workbooks.Add(XlWBATemplate.xlWBATWorksheet);
+            Worksheet ws = (Worksheet)wb.Worksheets[1];
+
+            if (ws == null)
+            {
+                Console.WriteLine("Worksheet could not be created. Check that your office installation and project references are correct.");
+            }
+
+            // Select the Excel cells, in the range c1 to c7 in the worksheet.
+            Range aRange = ws.get_Range("C1", "C7");
+
+            if (aRange == null)
+            {
+                Console.WriteLine("Could not get a range. Check to be sure you have the correct versions of the office DLLs.");
+            }
+
+            // Fill the cells in the C1 to C7 range of the worksheet with the number 6.
+            Object[] args = new Object[1];
+            args[0] = 6;
+            aRange.GetType().InvokeMember("Value", BindingFlags.SetProperty, null, aRange, args);
+
+            // Change the cells in the C1 to C7 range of the worksheet to the number 8.
+            aRange.Value2 = 8;
+
+        }
         public void ParseDICOMFiles(DICOMObject dcm)
         {
             //ParseDICOMFiles(DICOMObject.Read(@"C:\Users\dropbox\Desktop\export\DICOM\I0"));
             System.Diagnostics.Debug.WriteLine("in parse dicom");
             //var dcm = DICOMObject.Read(@"C:\Users\dropbox\Desktop\export\DICOM\I0");
             var allDescendants = dcm.AllElements;
-            System.Diagnostics.Debug.WriteLine(allDescendants);
-            System.Diagnostics.Debug.WriteLine(allDescendants[1]);
-            System.Diagnostics.Debug.WriteLine(dcm.FindFirst("00100010")); //Patient's name NONE^NONE
-            System.Diagnostics.Debug.WriteLine(dcm.FindFirst("00080020"));
+
+            System.Diagnostics.Debug.WriteLine("Stored in db for patient");
+            System.Diagnostics.Debug.WriteLine(dcm.FindFirst("00100020"));
+            System.Diagnostics.Debug.WriteLine(dcm.FindFirst("00100010"));
+            System.Diagnostics.Debug.WriteLine(dcm.FindFirst("00100010"));
             System.Diagnostics.Debug.WriteLine(dcm.FindFirst("00100030"));
+            System.Diagnostics.Debug.WriteLine(dcm.FindFirst("00101010"));
+            System.Diagnostics.Debug.WriteLine(dcm.FindFirst("00100040"));
+            /*
+            System.Diagnostics.Debug.WriteLine("Stored for each CT Scan for a patient. It is manually entered.");
+            System.Diagnostics.Debug.WriteLine("stored for the study");
+            System.Diagnostics.Debug.WriteLine(dcm.FindFirst("00200010"));
+            System.Diagnostics.Debug.WriteLine(dcm.FindFirst("00081030"));
+            System.Diagnostics.Debug.WriteLine(dcm.FindFirst("00080060"));
+            System.Diagnostics.Debug.WriteLine(dcm.FindFirst("00080020"));
+            System.Diagnostics.Debug.WriteLine(dcm.FindFirst("00080030"));
+            System.Diagnostics.Debug.WriteLine(dcm.FindFirst("00080090"));
+            System.Diagnostics.Debug.WriteLine(dcm.FindFirst("00080080"));
+            System.Diagnostics.Debug.WriteLine(dcm.FindFirst("001021B0"));
+            
+            System.Diagnostics.Debug.WriteLine("stored for the series");
+            System.Diagnostics.Debug.WriteLine(dcm.FindFirst("00200011"));
+            System.Diagnostics.Debug.WriteLine(dcm.FindFirst("0008103E"));
+
+            System.Diagnostics.Debug.WriteLine("stored for the slice");
+            System.Diagnostics.Debug.WriteLine(dcm.FindFirst("00180050"));
+            System.Diagnostics.Debug.WriteLine(dcm.FindFirst("00201208"));
+            */
+            //(0018,0050) slice thickness
+            //00201208 number of study related images
         }
 
         public int getBrandID(string brand)
@@ -108,7 +177,6 @@ namespace SEProj.Controllers
                 case "Medtronic":
                     id = 3;
                     break;
-                
                 default:
                     break;
             }
@@ -128,35 +196,33 @@ namespace SEProj.Controllers
                 case "March":
                     num = 03;
                     break;
-                case "April" :
+                case "April":
                     num = 04;
                     break;
-                case "May" :
+                case "May":
                     num = 05;
                     break;
-                case "June" :
+                case "June":
                     num = 07;
                     break;
-                case "July" :
+                case "July":
                     num = 08;
                     break;
-                case "August" :
+                case "August":
                     num = 09;
                     break;
-                case "September" :
+                case "September":
                     num = 09;
                     break;
-                case "October" :
+                case "October":
                     num = 10;
                     break;
-                case "November" : 
+                case "November":
                     num = 11;
                     break;
-                case "December" :
+                case "December":
                     num = 12;
                     break;
-                
-                
                 default:
                     System.Diagnostics.Debug.WriteLine("NOT A VALID MONTH");
                     break;
