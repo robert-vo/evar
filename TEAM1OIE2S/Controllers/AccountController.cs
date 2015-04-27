@@ -11,6 +11,7 @@ using TEAM1OIE2S.Models;
 using System.Data.SqlClient;
 using System.Data;
 using System.Security.Cryptography;
+using TEAM1OIE2S.Controllers;
 
 //Joseph Eldridge SQA 1112505
 
@@ -38,6 +39,7 @@ namespace TEAM1OIE2S.Controllers
 
         public ActionResult LogOn()
         {
+            
             return View();
         }
 
@@ -99,7 +101,7 @@ namespace TEAM1OIE2S.Controllers
                 //Initial Catalog refers to the default database, since sqlserver.cs.uh.edu has multiple databases.
               
 
-                string sql = "INSERT INTO USERS(first_Name, last_Name, email, company, username, password, occupation) Values(@firstName, @lastName, @email, @company, @username, @password, @occupation)";
+                string sql = "INSERT INTO USERS(firstName, lastName, email, company, username, password, occupation) Values(@firstName, @lastName, @email, @company, @username, @password, @occupation)";
                 SqlCommand cmd = new SqlCommand(sql, connection);
                 cmd.CommandType = CommandType.Text;
                 SqlParameter p1 = new SqlParameter("firstName", model.firstName);

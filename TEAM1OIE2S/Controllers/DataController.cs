@@ -13,6 +13,8 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Reflection;
 using Microsoft.Office.Interop.Excel;
+using System.Web.Security;
+
 
 namespace SEProj.Controllers
 {
@@ -30,7 +32,34 @@ namespace SEProj.Controllers
 
         public ActionResult SurgeonDataAnalysisInputForm()
         {
-            System.Diagnostics.Debug.WriteLine("in constructor");
+            try
+            {
+                var currentUser = Membership.GetUser(User.Identity.Name);
+                string userEmail = currentUser.Email.ToString();
+                string userOccupation = "";
+                SqlConnection connection = new SqlConnection(@"Data Source=sqlserver.cs.uh.edu,1044; User ID = TEAM1OIE2S; Password = TEAM1OIE2S#; Initial Catalog = TEAM1OIE2S");
+                string sql = "SELECT * FROM Users WHERE email = @email";
+                SqlCommand cmd = new SqlCommand(sql, connection);
+                cmd.CommandType = CommandType.Text;
+                cmd.Parameters.AddWithValue("@email", userEmail);
+                connection.Open();
+                SqlDataReader myReader = cmd.ExecuteReader();
+                while (myReader.Read())
+                {
+                    userOccupation = myReader["occupation"].ToString();
+                }
+                if (userOccupation == "Surgeon")
+                    return View("SurgeonDataAnalysisInputForm");
+                else
+                    return View("Error");
+            }
+            catch (SystemException e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+                System.Diagnostics.Debug.WriteLine("HELLO");
+                return View("Error");
+            }
+
             return View();
         }
 
@@ -43,8 +72,33 @@ namespace SEProj.Controllers
 
         public ActionResult UploadAndStoreEVARMetaData()
         {
-            SurgeonUploadModel model = new SurgeonUploadModel();
-            return View();
+            try
+            {
+                var currentUser = Membership.GetUser(User.Identity.Name);
+                string userEmail = currentUser.Email.ToString();
+                string userOccupation = "";
+                SqlConnection connection = new SqlConnection(@"Data Source=sqlserver.cs.uh.edu,1044; User ID = TEAM1OIE2S; Password = TEAM1OIE2S#; Initial Catalog = TEAM1OIE2S");
+                string sql = "SELECT * FROM Users WHERE email = @email";
+                SqlCommand cmd = new SqlCommand(sql, connection);
+                cmd.CommandType = CommandType.Text;
+                cmd.Parameters.AddWithValue("@email", userEmail);
+                connection.Open();
+                SqlDataReader myReader = cmd.ExecuteReader();
+                while (myReader.Read())
+                {
+                    userOccupation = myReader["occupation"].ToString();
+                }
+                if (userOccupation == "Surgeon")
+                    return View("UploadAndStoreEVARMetaData");
+                else
+                    return View("Error");
+            }
+            catch (SystemException e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+                System.Diagnostics.Debug.WriteLine("HELLO"); 
+                return View("Error");
+            }
         }
 
         [HttpPost]
