@@ -49,11 +49,15 @@
             <li>
                 <%: Html.ActionLink("Testimonials", "Testimonials", "Home")%></li>
             <li>
-                <%: Html.ActionLink("Anonymize EVAR Data", "Anonymize", "Home")%></li>
+                <%: Html.ActionLink("Anonymize", "Anonymize", "Home")%></li>
             <li>
-                <%: Html.ActionLink("Upload your EVAR zip folder here", "UploadAndStoreEVARMetaData", "Data")%></li>
+                <%: Html.ActionLink("Upload", "UploadAndStoreEVARMetaData", "Data")%></li>
             <li>
-                <%: Html.ActionLink("Data Analysis Input Form", "SurgeonDataAnalysisInputForm", "Data") %></li>
+                <%: Html.ActionLink("Data Analysis", "SurgeonDataAnalysisInputForm", "Data") %></li>
+            <li>
+                <%: Html.ActionLink("Login", "LogOn", "Account")%></li>
+            <li>
+                <%: Html.ActionLink("Register", "Register", "Account")%></li>
         </ul>
     </nav>
     <!-- Banner -->

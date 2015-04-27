@@ -1,4 +1,5 @@
 ﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
+
 <!-- Lime Talk Live Chat start -->
 <script type="text/javascript">    var limetalk = (function () { var lc = document.createElement("script"); lc.type = "text/javascript"; lc.async = true; lc.src = "//www.limetalk.com/livechat/2f7cc3a9649196783f441ea2fb7798e1"; document.getElementsByTagName("head")[0].appendChild(lc); var fnr = function (fn) { var l = limetalk; if (l.readyList) { l.ready(fn); } else { l.rl = l.rl || []; l.rl.push(fn); } }; fnr.ready = fnr; return fnr; })(); </script>
 <!-- Lime Talk Live Chat end -->
@@ -41,13 +42,17 @@
             <li>
                 <%: Html.ActionLink("Contact Us", "ContactUs", "Home")%></li>
             <li>
-                <%: Html.ActionLink("Testimonials", "Testimonials", "Home")%></li>  
+                <%: Html.ActionLink("Testimonials", "Testimonials", "Home")%></li>
             <li>
-                <%: Html.ActionLink("Anonymize EVAR Data", "Anonymize", "Home")%></li>
+                <%: Html.ActionLink("Anonymize", "Anonymize", "Home")%></li>
             <li>
-                <%: Html.ActionLink("Upload your EVAR zip folder here", "UploadAndStoreEVARMetaData", "Data")%></li>
+                <%: Html.ActionLink("Upload", "UploadAndStoreEVARMetaData", "Data")%></li>
             <li>
-                <%: Html.ActionLink("Data Analysis Input Form", "SurgeonDataAnalysisInputForm", "Data") %></li>
+                <%: Html.ActionLink("Data Analysis", "SurgeonDataAnalysisInputForm", "Data") %></li>
+            <li>
+                <%: Html.ActionLink("Login", "LogOn", "Account")%></li>
+            <li>
+                <%: Html.ActionLink("Register", "Register", "Account")%></li>
         </ul>
     </nav>
     <!-- Main -->
@@ -60,13 +65,13 @@
                         <article class="box page-content">
                             <header>
                                 <h2>
-                                     <asp:ContentPlaceHolder ID="Heading1" runat="server" /></h2>
+                                    <asp:ContentPlaceHolder ID="Heading1" runat="server" />
+                                </h2>
                                 <p>
-                                     <asp:ContentPlaceHolder ID="SubHeading1" runat="server" /></p>
-                                
+                                    <asp:ContentPlaceHolder ID="SubHeading1" runat="server" />
+                                </p>
                             </header>
                             <section>
-                                
                                 <p>
                                     <asp:ContentPlaceHolder ID="MainContent" runat="server">
                                     </asp:ContentPlaceHolder>
