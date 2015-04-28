@@ -26,7 +26,7 @@
         <div class="logo container">
             <div>
                 <h1>
-                    <%:Html.ActionLink("TEAM1OIE2S", "Index", "Home")%></h1>
+                    <%:Html.ActionLink("TEAM1OIE2S", "Index", "Shared")%></h1>
                 <p>
                     Anonymized EVAR Solutions</p>
             </div>
@@ -53,6 +53,8 @@
                 <%: Html.ActionLink("Login", "LogOn", "Account")%></li>
             <li>
                 <%: Html.ActionLink("Register", "Register", "Account")%></li>
+            <li>
+                <%: Html.ActionLink("Audit", "DatabaseAudit", "Audit")%></li>
         </ul>
     </nav>
     <!-- Main -->
