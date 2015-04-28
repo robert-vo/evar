@@ -14,6 +14,7 @@ using System.Data;
 using System.Reflection;
 using Microsoft.Office.Interop.Excel;
 using System.Web.Security;
+using Excel = Microsoft.Office.Interop.Excel;
 
 
 namespace SEProj.Controllers
@@ -104,6 +105,8 @@ namespace SEProj.Controllers
         [HttpPost]
         public ActionResult UploadAndStoreEVARMetaData(HttpPostedFileBase file, SurgeonUploadModel model)
         {
+
+            createExcel(model);
             
             //for(int i = 0; i < 489; i++)
                 //ParseDICOMFiles(DICOMObject.Read(@"C:\Users\dropbox\Desktop\export\DICOM\I" + i));
@@ -158,7 +161,7 @@ namespace SEProj.Controllers
             return RedirectToAction("UploadAndStoreEVARMetaData");
         }
 
-        public void createExcel() //add reference to microsoft excel. project->add reference->com->microsoft excel 
+        public void createExcel(SurgeonUploadModel model) //add reference to microsoft excel. project->add reference->com->microsoft excel 
         {
             Microsoft.Office.Interop.Excel.Application xlApp = new Microsoft.Office.Interop.Excel.Application();
 
@@ -176,8 +179,28 @@ namespace SEProj.Controllers
                 Console.WriteLine("Worksheet could not be created. Check that your office installation and project references are correct.");
             }
 
+            ws.Cells[1, "A"] = "Surgery Date";
+            ws.Cells[1, "B"] = "CT";
+            ws.Cells[1, "C"] = "Study date";
+            ws.Cells[1, "D"] = "Delay";
+            ws.Cells[1, "E"] = "Series";
+            ws.Cells[1, "F"] = "tot N Slides";
+            ws.Cells[1, "G"] = "thick (mm)";
+            ws.Cells[1, "H"] = "pixel size";
+            ws.Cells[1, "I"] = "ROI begin";
+            ws.Cells[1, "J"] = "iliac bif";
+            ws.Cells[1, "K"] = "ROI end";
+            ws.Cells[1, "L"] = "totSlides ROI";
+            ws.Cells[1, "M"] = "length ROI (cm)";
+            ws.Cells[1, "N"] = "comments";
+
+            ws.Range["A1", "N1"].AutoFormat(
+                Excel.XlRangeAutoFormat.xlRangeAutoFormatClassic3);
+
             // Select the Excel cells, in the range c1 to c7 in the worksheet.
-            Range aRange = ws.get_Range("C1", "C7");
+            /*Range aRange = ws.get_Range("C1", "C7");
+
+           
 
             if (aRange == null)
             {
@@ -190,8 +213,8 @@ namespace SEProj.Controllers
             aRange.GetType().InvokeMember("Value", BindingFlags.SetProperty, null, aRange, args);
 
             // Change the cells in the C1 to C7 range of the worksheet to the number 8.
-            aRange.Value2 = 8;
-
+            aRange.Value2 = model.BrandName;
+            */
         }
         public void ParseDICOMFiles(DICOMObject dcm)
         {
