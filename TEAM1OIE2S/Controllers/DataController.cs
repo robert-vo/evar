@@ -16,7 +16,6 @@ using Microsoft.Office.Interop.Excel;
 using System.Web.Security;
 using Excel = Microsoft.Office.Interop.Excel;
 
-
 namespace SEProj.Controllers
 {
     public class DataController : Controller
@@ -45,7 +44,7 @@ namespace SEProj.Controllers
                 string userEmail = currentUser.Email.ToString();
                 string userOccupation = "";
                 SqlConnection connection = new SqlConnection(@"Data Source=sqlserver.cs.uh.edu,1044; User ID = TEAM1OIE2S; Password = TEAM1OIE2S#; Initial Catalog = TEAM1OIE2S");
-                string sql = "SELECT * FROM Users WHERE email = @email";
+                string sql = "SELECT * FROM Surgeons WHERE email = @email";
                 SqlCommand cmd = new SqlCommand(sql, connection);
                 cmd.CommandType = CommandType.Text;
                 cmd.Parameters.AddWithValue("@email", userEmail);
@@ -53,7 +52,7 @@ namespace SEProj.Controllers
                 SqlDataReader myReader = cmd.ExecuteReader();
                 while (myReader.Read())
                 {
-                    userOccupation = myReader["occupation"].ToString();
+                    userOccupation = myReader["accessLevel"].ToString();
                 }
                 if (userOccupation == "Surgeon" || userOccupation == "Administrator" || userOccupation == "Super Administrator")
                     return View("SurgeonDataAnalysisInputForm");
@@ -86,7 +85,7 @@ namespace SEProj.Controllers
                 string userEmail = currentUser.Email.ToString();
                 string userOccupation = "";
                 SqlConnection connection = new SqlConnection(@"Data Source=sqlserver.cs.uh.edu,1044; User ID = TEAM1OIE2S; Password = TEAM1OIE2S#; Initial Catalog = TEAM1OIE2S");
-                string sql = "SELECT * FROM Users WHERE email = @email";
+                string sql = "SELECT * FROM Surgeons WHERE email = @email";
                 SqlCommand cmd = new SqlCommand(sql, connection);
                 cmd.CommandType = CommandType.Text;
                 cmd.Parameters.AddWithValue("@email", userEmail);
@@ -94,7 +93,7 @@ namespace SEProj.Controllers
                 SqlDataReader myReader = cmd.ExecuteReader();
                 while (myReader.Read())
                 {
-                    userOccupation = myReader["occupation"].ToString();
+                    userOccupation = myReader["accessLevel"].ToString();
                 }
                 if (userOccupation == "Surgeon" || userOccupation == "Administrator" || userOccupation == "Super Administrator")
                     return View("UploadAndStoreEVARMetaData");
@@ -113,12 +112,15 @@ namespace SEProj.Controllers
         public ActionResult UploadAndStoreEVARMetaData(HttpPostedFileBase file, SurgeonUploadModel model)
         {
 
-            createExcel(model);
+            ParseZipDICOMFilesInPath("C:\\Users\\dropbox\\Desktop\\export", model);
             
-            //for(int i = 0; i < 489; i++)
-                //ParseDICOMFiles(DICOMObject.Read(@"C:\Users\dropbox\Desktop\export\DICOM\I" + i));
+            //System.Diagnostics.Debug.WriteLine(fCount);
+            //createExcel(model);
+            
+            //for(int i = 0; i < 15632 ; i++)
+                //ParseDICOMFiles(DICOMObject.Read(@"C:\Users\dropbox\Desktop\export1\DICOM\I" + i), "C:\\Users\\dropbox\\Desktop\\export1\\DICOM\\I" + i);
             //ParseDICOMFiles(DICOMObject.Read(@"C:\Users\dropbox\Desktop\export\DICOM\I0"));
-            //ParseDICOMFiles(DICOMObject.Read(@"C:\Users\dropbox\Desktop\export\DICOMDIR"));
+            //ParseDICOMFiles(DICOMObject.Read(@"C:\Users\dropbox\Desktop\export1\DICOMDIR"), "C:\\Users\\dropbox\\Desktop\\export1\\DICOMDIR");
             /*
             int brandManufacturerID = getBr andID(model.BrandName);
             int month = getMonthFromString(model.MonthOfSurgery);
@@ -223,22 +225,119 @@ namespace SEProj.Controllers
             aRange.Value2 = model.BrandName;
             */
         }
-        public void ParseDICOMFiles(DICOMObject dcm)
+
+        public void ParseZipDICOMFilesInPath(string filePath, SurgeonUploadModel model)
+        {
+            try
+            {
+                int fileCount = Directory.GetFiles(@"C:\Users\dropbox\Desktop\export\DICOM", "*", SearchOption.TopDirectoryOnly).Length;
+                SqlConnection connection = new SqlConnection(@"Data Source=sqlserver.cs.uh.edu,1044; User ID = TEAM1OIE2S; Password = TEAM1OIE2S#; Initial Catalog = TEAM1OIE2S");
+                string sql = "INSERT INTO Patient(originalID, sex, age, entryDate, dateOfSurgery, surgeonID) Values(@originalID, @sex, @age, @entryDate, @dateOfSurgery, @surgeonID)";
+                SqlCommand cmd = new SqlCommand(sql, connection);
+                cmd.CommandType = CommandType.Text;
+                DICOMObject dcm = DICOMObject.Read(@"C:\Users\dropbox\Desktop\export\DICOM\I0");
+                int originalID = 0;
+                for (int i = 0; i < dcm.FindFirst("00100020").ToString().Length; i++)
+                {
+                    if (dcm.FindFirst("00100020").ToString() != "NOID")
+                    {
+                        if (dcm.FindFirst("00100020").ToString()[i] == '>')
+                        {
+                            originalID = Convert.ToInt32(dcm.FindFirst("00100020").ToString()[i + 2] + dcm.FindFirst("00100020").ToString()[i + 3]);
+                        }
+                    }
+                }
+                SqlParameter p1 = new SqlParameter("originalID", originalID); //original ID. Patient ID 55539
+                int age = 0;
+                for (int i = 0; i < dcm.FindFirst("00100010").ToString().Length; i++)
+                {
+                    if (dcm.FindFirst("00100010").ToString()[i] == '>' )
+                    {
+                        age = Convert.ToInt32(dcm.FindFirst("00100010").ToString()[i + 2] + dcm.FindFirst("00100010").ToString()[i + 3]);
+                    }
+                }
+                SqlParameter p2 = new SqlParameter("sex", dcm.FindFirst("00100040").ToString()); //sex
+                SqlParameter p3 = new SqlParameter("age", age); //age
+                SqlParameter p4 = new SqlParameter("entryDate", DateTime.Now);
+                System.Diagnostics.Debug.WriteLine(DateTime.Now);
+                SqlParameter p5 = new SqlParameter("dateOfSurgery", model.YearOfSurgery + "-" + model.MonthOfSurgery + "-" + model.DayOfSurgery); //date of surgery
+                SqlParameter p6 = new SqlParameter("surgeonID", grabUserID());
+                cmd.Parameters.Add(p1);    
+                cmd.Parameters.Add(p2);    
+                cmd.Parameters.Add(p3);    
+                cmd.Parameters.Add(p4);    
+                cmd.Parameters.Add(p5);    
+                cmd.Parameters.Add(p6);    
+                connection.Open();
+                cmd.ExecuteNonQuery();
+                processDICOMFiles(filePath, fileCount);
+            }
+            catch(SystemException e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+            }
+        }
+
+        public void processDICOMFiles(string filePath, int fileCount)
+        {
+            SqlConnection connection = new SqlConnection(@"Data Source=sqlserver.cs.uh.edu,1044; User ID = TEAM1OIE2S; Password = TEAM1OIE2S#; Initial Catalog = TEAM1OIE2S");
+            string sql = "INSERT INTO Study(originalStudyID, studyDescription, studyDate, CT, delay, patientID) Values(@originalStudyID, @studyDescription, @studyDate, @CT, @delay, @patientID)";
+            SqlCommand cmd = new SqlCommand(sql, connection);
+            cmd.CommandType = CommandType.Text;
+
+            string newFilePath = filePath + "\\DICOM\\I";
+
+            //DICOMObject dcm = DICOMObject.Read(filePath + "\\DICOM\\I");
+            
+            var startAndFinishedIDs = new List<Tuple<int, int>>();
+            int finish = 0;
+            int holder = 0;
+            int start = 0;
+            string hold = "";
+            for (int i = 0; i < fileCount; i++)
+            {
+                DICOMObject dcm = DICOMObject.Read(newFilePath + i.ToString());
+                for (int j = 0; j < dcm.FindFirst("00200011").ToString().Length; j++)
+                {
+                    if (dcm.FindFirst("00200011").ToString()[j] == '>')
+                    {
+                        for (int k = j + 2; k < dcm.FindFirst("00200011").ToString().Length; k++)
+                            hold = hold + dcm.FindFirst("00200011").ToString()[k];
+                    }
+                }
+                holder = Convert.ToInt32(hold);
+                if (start == 0)
+                    start = i;
+                else if (holder != start)
+                    finish = holder - 1;
+            }//make list
+        }
+        public int grabUserID()
+        {
+            var currentUser = Membership.GetUser(User.Identity.Name);
+            string userEmail = currentUser.Email.ToString();
+            int userID = 0;
+            SqlConnection connection = new SqlConnection(@"Data Source=sqlserver.cs.uh.edu,1044; User ID = TEAM1OIE2S; Password = TEAM1OIE2S#; Initial Catalog = TEAM1OIE2S");
+            string sql = "SELECT * FROM Users WHERE email = @email";
+            SqlCommand cmd = new SqlCommand(sql, connection);
+            cmd.CommandType = CommandType.Text;
+            cmd.Parameters.AddWithValue("@email", userEmail);
+            connection.Open();
+            SqlDataReader myReader = cmd.ExecuteReader();
+            while (myReader.Read())
+            {
+                userID = Convert.ToInt32(myReader["userID"]);
+            }
+            return userID;
+        }
+        
+        public void ParseDICOMFiles(DICOMObject dcm, string filePath)
         {
             //ParseDICOMFiles(DICOMObject.Read(@"C:\Users\dropbox\Desktop\export\DICOM\I0"));
-            System.Diagnostics.Debug.WriteLine("in parse dicom");
+            
             //var dcm = DICOMObject.Read(@"C:\Users\dropbox\Desktop\export\DICOM\I0");
             var allDescendants = dcm.AllElements;
-
-            System.Diagnostics.Debug.WriteLine("Stored in db for patient");
-            System.Diagnostics.Debug.WriteLine(dcm.FindFirst("00100020"));
-            System.Diagnostics.Debug.WriteLine(dcm.FindFirst("00100010"));
-            System.Diagnostics.Debug.WriteLine(dcm.FindFirst("00100010"));
-            System.Diagnostics.Debug.WriteLine(dcm.FindFirst("00100030"));
-            System.Diagnostics.Debug.WriteLine(dcm.FindFirst("00101010"));
-            System.Diagnostics.Debug.WriteLine(dcm.FindFirst("00100040"));
-            /*
-            System.Diagnostics.Debug.WriteLine("Stored for each CT Scan for a patient. It is manually entered.");
+            System.Diagnostics.Debug.WriteLine("-------------" + filePath + "-----------");
             System.Diagnostics.Debug.WriteLine("stored for the study");
             System.Diagnostics.Debug.WriteLine(dcm.FindFirst("00200010"));
             System.Diagnostics.Debug.WriteLine(dcm.FindFirst("00081030"));
@@ -248,15 +347,12 @@ namespace SEProj.Controllers
             System.Diagnostics.Debug.WriteLine(dcm.FindFirst("00080090"));
             System.Diagnostics.Debug.WriteLine(dcm.FindFirst("00080080"));
             System.Diagnostics.Debug.WriteLine(dcm.FindFirst("001021B0"));
-            
             System.Diagnostics.Debug.WriteLine("stored for the series");
             System.Diagnostics.Debug.WriteLine(dcm.FindFirst("00200011"));
             System.Diagnostics.Debug.WriteLine(dcm.FindFirst("0008103E"));
-
             System.Diagnostics.Debug.WriteLine("stored for the slice");
+            System.Diagnostics.Debug.WriteLine(dcm.FindFirst("00200013"));
             System.Diagnostics.Debug.WriteLine(dcm.FindFirst("00180050"));
-            System.Diagnostics.Debug.WriteLine(dcm.FindFirst("00201208"));
-            */
             //(0018,0050) slice thickness
             //00201208 number of study related images
         }

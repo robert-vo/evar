@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.SqlClient;
+using System.Web.Security;
+using System.Data;
 
 namespace TEAM1OIE2S.Controllers
 {
@@ -57,9 +59,36 @@ namespace TEAM1OIE2S.Controllers
 
         public ActionResult DatabaseAudit()
         {
-          	var list = getAudits();
-            ViewData["auditsList"] = list;
-            return View();
+            try
+            {
+                var currentUser = Membership.GetUser(User.Identity.Name);
+                string userEmail = currentUser.Email.ToString();
+                string userOccupation = "";
+                SqlConnection connection = new SqlConnection(@"Data Source=sqlserver.cs.uh.edu,1044; User ID = TEAM1OIE2S; Password = TEAM1OIE2S#; Initial Catalog = TEAM1OIE2S");
+                string sql = "SELECT * FROM Surgeons WHERE email = @email";
+                SqlCommand cmd = new SqlCommand(sql, connection);
+                cmd.CommandType = CommandType.Text;
+                cmd.Parameters.AddWithValue("@email", userEmail);
+                connection.Open();
+                SqlDataReader myReader = cmd.ExecuteReader();
+                while (myReader.Read())
+                {
+                    userOccupation = myReader["accessLevel"].ToString();
+                }
+                if (userOccupation == "Audit")
+                {
+                    var list = getAudits();
+                    ViewData["auditsList"] = list;
+                    return View("DatabaseAudit");
+                }
+                else
+                    return View("Error");
+            }
+            catch (SystemException e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+                return View("Error");
+            }
         }
     }
 }

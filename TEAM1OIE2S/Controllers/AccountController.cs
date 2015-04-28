@@ -99,18 +99,20 @@ namespace TEAM1OIE2S.Controllers
                 SqlConnection connection = new SqlConnection(@"Data Source=sqlserver.cs.uh.edu,1044; User ID = TEAM1OIE2S; Password = TEAM1OIE2S#; Initial Catalog = TEAM1OIE2S");
                 //establishing a connection to sqlserver.cs.uh.edu at port 1044 with the credentials TEAM1OIE2S and password TEAM1OIE2S#. 
                 //Initial Catalog refers to the default database, since sqlserver.cs.uh.edu has multiple databases.
-              
 
-                string sql = "INSERT INTO USERS(firstName, lastName, email, company, username, password, occupation) Values(@firstName, @lastName, @email, @company, @username, @password, @occupation)";
+
+                string sql = "INSERT INTO SURGEONS(firstName, lastName, email, institutionID, username, password, active, online, accessLevel) Values(@firstName, @lastName, @email, @institutionID, @username, @password, @active, @online, @accessLevel)";
                 SqlCommand cmd = new SqlCommand(sql, connection);
                 cmd.CommandType = CommandType.Text;
                 SqlParameter p1 = new SqlParameter("firstName", model.firstName);
                 SqlParameter p2 = new SqlParameter("lastName", model.lastName);
                 SqlParameter p3 = new SqlParameter("email", model.Email);
-                SqlParameter p4 = new SqlParameter("company", model.company);
+                SqlParameter p4 = new SqlParameter("institutionID", model.institutionID);
                 SqlParameter p5 = new SqlParameter("username", model.UserName);
                 SqlParameter p6 = new SqlParameter("password", GenerateSaltedHash(GetBytes(model.Password), GetBytes("salt")));
-                SqlParameter p7 = new SqlParameter("occupation", model.occupation);
+                SqlParameter p7 = new SqlParameter("active", 1);
+                SqlParameter p8 = new SqlParameter("online", 1);
+                SqlParameter p9 = new SqlParameter("accessLevel", model.occupation);
 
                 cmd.Parameters.Add(p1);
                 cmd.Parameters.Add(p2);
@@ -119,6 +121,8 @@ namespace TEAM1OIE2S.Controllers
                 cmd.Parameters.Add(p5);
                 cmd.Parameters.Add(p6);
                 cmd.Parameters.Add(p7);
+                cmd.Parameters.Add(p8);
+                cmd.Parameters.Add(p9);
                 connection.Open();
                 cmd.ExecuteNonQuery();
 
@@ -126,7 +130,7 @@ namespace TEAM1OIE2S.Controllers
 
                 // Attempt to register the user
                 MembershipCreateStatus createStatus = MembershipService.CreateUser(model.UserName, model.Password, model.Email);
-                
+
                 if (createStatus == MembershipCreateStatus.Success)
                 {
                     FormsService.SignIn(model.UserName, false /* createPersistentCookie */);

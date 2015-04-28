@@ -18,85 +18,86 @@
     <% using (Html.BeginForm())
        { %>
     <%: Html.ValidationSummary(true, "Account creation was unsuccessful. Please correct the errors and try again.") %>
-    <div>
-        <fieldset>
-            <legend>Account Information</legend>
-            <div class="editor-label">
-                <label>
-                    First Name
-                </label>
-            </div>
-            <div class="editor-field">
-                <%: Html.TextBoxFor(m => m.firstName)%>
+    <table>
+        <tr>
+            <td>
+                <legend>Account Information</legend>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                First Name
+            </td>
+            <td>
+                <%: Html.TextBoxFor(m => m.firstName, new { style="width:300px; height:30px"})%>
                 <%: Html.ValidationMessageFor(m => m.firstName)%>
-            </div>
-            <div class="editor-label">
-                <label>
-                    Last Name
-                </label>
-            </div>
-            <div class="editor-field">
-                <%: Html.TextBoxFor(m => m.lastName)%>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Last Name
+            </td>
+            <td>
+                <%: Html.TextBoxFor(m => m.lastName, new { style = "width:300px; height:30px" })%>
                 <%: Html.ValidationMessageFor(m => m.lastName)%>
-            </div>
-            <div class="editor-label">
-                <label>
-                    Company</label>
-            </div>
-            <div class="editor-field">
-                <%: Html.TextBoxFor(m => m.company)%>
-                <%: Html.ValidationMessageFor(m => m.company)%>
-            </div>
-            
-            <div class="editor-label">
-                <label>
-                    Occupation
-                </label>
-            </div>
-            <div class = "editor-field">
-                <%: Html.DropDownListFor(m => m.occupation, new SelectList(new[] { "Surgeon", "Computational Scientist", "CFD Scientist", "Administrator"})) %>
-            </div>
-
-            <div class="editor-label">
-                <label>
-                    User Name
-                </label>
-            </div>
-            <div class="editor-field">
-                <%: Html.TextBoxFor(m => m.UserName) %>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Institution
+            </td>
+            <td>
+                <%: Html.DropDownListFor(m => m.institutionID, new SelectList(new[] { "Methodist; Houston, TX", "Strassbourg; Strassbourg, France", "London; London, UK", "Gainsville; Gainsville, FL"}), new { style = "width:300px;height:30px;" })%>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Occupation
+            </td>
+            <td>
+                <%: Html.DropDownListFor(m => m.occupation, new SelectList(new[] { "Surgeon", "Administrator", "Super Administrator", "Customer Service", "Audit" }), new { style="width:300px;height:30px;" })%>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                User Name
+            </td>
+            <td>
+                <%: Html.TextBoxFor(m => m.UserName, new { style = "width:300px; height:30px" })%>
                 <%: Html.ValidationMessageFor(m => m.UserName) %>
-            </div>
-            <div class="editor-label">
-                <label>
-                    Email
-                </label>
-            </div>
-            <div class="editor-field">
-                <%: Html.TextBoxFor(m => m.Email) %>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Email
+            </td>
+            <td>
+                <%: Html.TextBoxFor(m => m.Email, new { style = "width:300px; height:30px" })%>
                 <%: Html.ValidationMessageFor(m => m.Email) %>
-            </div>
-            <div class="editor-label">
-                <label>
-                    Password
-                </label>
-            </div>
-            <div class="editor-field">
-                <%: Html.PasswordFor(m => m.Password) %>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Password
+            </td>
+            <td>
+                <%: Html.PasswordFor(m => m.Password, new { style = "width:300px; height:30px" })%>
                 <%: Html.ValidationMessageFor(m => m.Password) %>
-            </div>
-            <div class="editor-label">
-                <label>
-                    Confirm Password
-                </label>
-            </div>
-            <div class="editor-field">
-                <%: Html.PasswordFor(m => m.ConfirmPassword) %>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Confirm Password
+            </td>
+            <td>
+                <%: Html.PasswordFor(m => m.ConfirmPassword, new { style = "width:300px; height:30px" })%>
                 <%: Html.ValidationMessageFor(m => m.ConfirmPassword) %>
-            </div>
-            <p>
-                <input type="submit" value="Register" />
-            </p>
-        </fieldset>
-    </div>
+            </td>
+        </tr>
+    </table>
+    <p>
+        <input type="submit" value="Register" />
+    </p>
+
     <% } %>
 </asp:Content>

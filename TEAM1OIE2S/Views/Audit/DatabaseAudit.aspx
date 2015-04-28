@@ -4,9 +4,12 @@
 	DatabaseAudit
 </asp:Content>
 
-<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-<table class="table table-hover">
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+<style>
+table, tr, th, thead, td { border: 1px solid black;
+}</style>
+<table style = "width:100%" class="table table-hover">
 	<thead>
 		<tr>
 			<th colspan="1">Type</th>
@@ -20,12 +23,12 @@
 	<tbody>
 		<% foreach (var _audits in (List<TEAM1OIE2S.Models.AuditModel>)ViewData["auditsList"]){ %>
 		<tr>
-			<td  colspan="1"><%: _audits.Type %></td>
-			<td  colspan="1"><%: _audits.TableName %></td>
-			<td  colspan="1"><%: _audits.FieldName %></td>
-			<td  colspan="1"><%: _audits.OldValue %></td>
-			<td  colspan="1"><%: _audits.NewValue %></td>
-			<td  colspan="1"><%: _audits.UpdateDate %></td>
+			<td colspan="1" align="center"><%: _audits.Type %></td>
+			<td colspan="1" align="center"><%: _audits.TableName %></td>
+			<td colspan="1" align="center"><%: _audits.FieldName %></td>
+			<td colspan="1" align="center"><%: _audits.OldValue %></td>
+			<td colspan="1" align="center"><%: _audits.NewValue %></td>
+			<td colspan="1" align="center"><%: _audits.UpdateDate %></td>
 		</tr>
 		<%}%>
 	</tbody>

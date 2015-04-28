@@ -79,8 +79,8 @@ namespace TEAM1OIE2S.Models
         public string lastName { get; set; }
 
         [Required]
-        [DisplayName("company")]
-        public string company { get; set; }
+        [DisplayName("institutionID")]
+        public string institutionID { get; set; }
 
         [Required]
         [DisplayName("occupation")]
