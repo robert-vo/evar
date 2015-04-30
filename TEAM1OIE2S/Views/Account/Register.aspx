@@ -38,7 +38,7 @@
                 Last Name
             </td>
             <td>
-                <%: Html.TextBoxFor(m => m.lastName, new { style = "width:300px; height:30px" })%>
+                <%: Html.TextBoxFor(m => m.lastName, new { style = "width:300px; height:50px" })%>
                 <%: Html.ValidationMessageFor(m => m.lastName)%>
             </td>
         </tr>

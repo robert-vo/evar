@@ -112,8 +112,10 @@ namespace SEProj.Controllers
         public ActionResult UploadAndStoreEVARMetaData(HttpPostedFileBase file, SurgeonUploadModel model)
         {
 
+
             ParseZipDICOMFilesInPath("C:\\Users\\dropbox\\Desktop\\export", model);
             
+
             //System.Diagnostics.Debug.WriteLine(fCount);
             //createExcel(model);
             
@@ -121,17 +123,17 @@ namespace SEProj.Controllers
                 //ParseDICOMFiles(DICOMObject.Read(@"C:\Users\dropbox\Desktop\export1\DICOM\I" + i), "C:\\Users\\dropbox\\Desktop\\export1\\DICOM\\I" + i);
             //ParseDICOMFiles(DICOMObject.Read(@"C:\Users\dropbox\Desktop\export\DICOM\I0"));
             //ParseDICOMFiles(DICOMObject.Read(@"C:\Users\dropbox\Desktop\export1\DICOMDIR"), "C:\\Users\\dropbox\\Desktop\\export1\\DICOMDIR");
-            /*
-            int brandManufacturerID = getBr andID(model.BrandName);
+            
+            int brandManufacturerID = getBrandID(model.BrandName);
             int month = getMonthFromString(model.MonthOfSurgery);
             try //if a file is uploaded...
             {
                 var fileName = Path.GetFileName(file.FileName);
-                var path = Path.Combine(Server.MapPath("~/App_Data/"), fileName);
+                var path = Path.Combine(Server.MapPath("@C:/COSC4351_SPRING2015/TEAM1OIE2S/"), fileName);
                 if (fileName.Split('.')[1] == "zip") //if the file uploaded is a "~.zip" file
                 {
                     file.SaveAs(path); //save it to the ~/App_Data path
-                    ExtractZipFile(path, null, "C://unzip"); //extract zip to C:/unzip
+                    ExtractZipFile(path, null, "@C:/COSC4351_SPRING2015/TEAM1OIE2S/"); //extract zip to C:/unzip
                     //establishes a sql connection and inserts the values into the endograft table.
                     SqlConnection connection = new SqlConnection(@"Data Source=sqlserver.cs.uh.edu,1044; User ID = TEAM1OIE2S; Password = TEAM1OIE2S#; Initial Catalog = TEAM1OIE2S");
                     string sql = "INSERT INTO Endograft(diameter, length, unilateralLegDiameter, unilateralLegLength, controlateralLegDiameter, controlateralLegLength, entryPoint, brandID) Values (@diameter, @length, @UnilateralLegDiameter, @UnilateralLegLength, @ContralateralLegDiameter, @ContralateralLegLength, @EntryPoint, @brandID)";
@@ -165,7 +167,7 @@ namespace SEProj.Controllers
             {
                 System.Diagnostics.Debug.WriteLine(e.Message);
             }
-            */
+            
 
             return RedirectToAction("UploadAndStoreEVARMetaData");
         }

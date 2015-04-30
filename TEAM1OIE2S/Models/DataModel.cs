@@ -11,6 +11,8 @@ using System.Web.Security;
 namespace TEAM1OIE2S.Models
 {
     #region Models
+
+
     public class SurgeonUploadModel
     {
         [Required]
@@ -56,6 +58,8 @@ namespace TEAM1OIE2S.Models
         [Required]
         [DisplayName("Entry Point")]
         public string EntryPoint { get; set; }
+
+        
     }
     #endregion
 
